@@ -1,25 +1,34 @@
+parameters:
+- name: AdditionalParameters
+  type: object
+  default: {}
+- name: CloudConfig
+  type: object
+  default:
+    SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+    Location: eastus2
+    Cloud: Public
+- name: MatrixFilters
+  type: object
+  default: []
+- name: MatrixConfigs
+  type: object
+  default:
+    - Name: base_product_matrix
+      Path: eng/scripts/job-matrix/samples/matrix.json
+      Selection: all
+      GenerateVMJobs: true
+    - Name: sparse_product_matrix
+      Path: eng/scripts/job-matrix/samples/matrix.json
+      Selection: sparse
+      NonSparseParameters:
+        - framework
+      GenerateVMJobs: true
+
 jobs:
-  - template: /eng/pipelines/templates/jobs/job-matrix.yml
+  - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
     parameters:
-      MatrixConfigs:
-        - Name: base_product_matrix
-          Path: eng/scripts/job-matrix/samples/matrix.json
-          Selection: all
-        - Name: sparse_product_matrix
-          Path: eng/scripts/job-matrix/samples/matrix.json
-          Selection: sparse
-      steps:
-        - pwsh: |
-            Write-Output "MATRIX JOB PARAMETERS"
-            Write-Output $(Agent.JobName)
-            Write-Output "-----------------"
-            Write-Output $(operatingSystem)
-            Write-Output $(framework)
-            try {
-              Write-Output $(additionalTestArguments)
-            } catch {}
-          displayName: Print matrix job variables
-        - pwsh: |
-            Write-Output "Success"
-          displayName: OS condition example
-          condition: and(succeededOrFailed(), contains(variables['operatingSystem'], 'windows'))
+      AdditionalParameters: ${{ parameters.AdditionalParameters }}
+      CloudConfig: ${{ parameters.CloudConfig }}
+      MatrixFilters: ${{ parameters.MatrixFilters }}
+      MatrixConfigs: ${{ parameters.MatrixConfigs }}
