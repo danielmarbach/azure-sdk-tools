@@ -1,0 +1,24 @@
+parameters:
+  - name: Paths
+    type: object
+    default: []
+
+steps:
+  - checkout: none
+
+  - pwsh: |
+      $auth = "AUTHORIZATION: bearer $(System.AccessToken)"
+      git clone -c http.extraheader=$auth --no-checkout --filter=tree:0 git@github.com:$(Build.Repository.Name).git .
+      git sparse-checkout init
+      git sparse-checkout set eng
+    displayName: Initialize sparse checkout repository
+    workingDirectory: $(Build.Repository.LocalPath)
+
+  - ${{ each path in parameters.Paths }}:
+    - pwsh: git sparse-checkout add ${{ path }}
+      displayName: Add sparse checkout paths
+      workingDirectory: $(Build.Repository.LocalPath)
+
+  - pwsh: git checkout $(Build.SourceVersion)
+    displayName: Sparse checkout repository paths
+    workingDirectory: $(Build.Repository.LocalPath)
