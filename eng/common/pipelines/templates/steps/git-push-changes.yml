@@ -1,5 +1,19 @@
 steps:
 - pwsh: |
+    git clone https://github.com/Azure/azure-docs-sdk-java $(System.DefaultWorkingDirectory)/repo
+
+    try {
+      Push-Location $(System.DefaultWorkingDirectory)/repo
+
+      Write-Host "git checkout master"
+      git checkout master
+    } finally {
+      Pop-Location
+    }
+  displayName: Clone Documentation Repository
+  ignoreLASTEXITCODE: false
+- pwsh: |
+    (Get-Content "$(System.DefaultWorkingDirectory)/repo/README.md" | Out-String) -replace "`n", "`r`n" | Out-File "$(System.DefaultWorkingDirectory)/repo/README.md"
     
     echo "git add -A"
     git add -A
