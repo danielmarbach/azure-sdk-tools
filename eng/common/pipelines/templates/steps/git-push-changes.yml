@@ -55,5 +55,5 @@ steps:
       -CommitMsg "This is only tests"
       -GitUrl "https://$(azuresdk-github-pat)@github.com/Azure/$(RepoNameWithoutOwner).git"
       -PushArgs "-f"
-      -SkipCommit false
+      -SkipCommit $false
       -RemoteName "origin"
