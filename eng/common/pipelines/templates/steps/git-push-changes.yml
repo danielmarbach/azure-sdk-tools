@@ -1,9 +1,3 @@
-parameters:
-  WorkingDirectory: '$(System.DefaultWorkingDirectory)'
-  ScriptDirectory: eng/common/scripts
-  SkipCheckingForChanges: false
-  RemoteName: 'origin'
-
 steps:
 - pwsh: |
     
@@ -22,8 +16,8 @@ steps:
       echo "No changes so skipping code push"
     }
   displayName: Check for changes
-  condition: and(succeeded(), eq(${{ parameters.SkipCheckingForChanges }}, false))
-  workingDirectory: ${{ parameters.WorkingDirectory }}
+  condition: and(succeeded())
+  workingDirectory: "$(System.DefaultWorkingDirectory)"
   ignoreLASTEXITCODE: true
 
 - pwsh: |
@@ -41,11 +35,11 @@ steps:
   inputs:
     pwsh: true
     workingDirectory: ${{ parameters.WorkingDirectory }}
-    filePath: ${{ parameters.ScriptDirectory }}/git-branch-push.ps1
+    filePath: eng/common/scripts/git-branch-push.ps1
     arguments: >
       -PRBranchName "master"
       -CommitMsg "This is only tests"
       -GitUrl "https://$(azuresdk-github-pat)@github.com/Azure/$(RepoNameWithoutOwner).git"
       -PushArgs "-f"
-      -SkipCommit $${{ parameters.SkipCheckingForChanges }}
-      -RemoteName ${{ parameters.RemoteName }}
+      -SkipCommit false
+      -RemoteName "origin"
