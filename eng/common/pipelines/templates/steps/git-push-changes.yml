@@ -1,14 +1,14 @@
 parameters:
-  PRBranchName: not-specified
-  PROwner: azure-sdk
+  PRBranchName: master
+  PROwner: Azure
   CommitMsg: not-specified
-  RepoOwner: Azure
-  RepoName: $(Build.Repository.Name)
-  PushArgs:
+  RepoOwner: 'Azure'
+  RepoName: 'azure-docs-sdk-java'
+  PushArgs: '-f'
   WorkingDirectory: $(System.DefaultWorkingDirectory)'
   ScriptDirectory: eng/common/scripts
   SkipCheckingForChanges: false
-  RemoteName: 'azure-sdk-fork'
+  RemoteName: 'origin'
 
 steps:
 - pwsh: |
