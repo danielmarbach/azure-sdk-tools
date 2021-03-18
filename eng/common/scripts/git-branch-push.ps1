@@ -52,12 +52,17 @@ if (!(git remote | ? {$_ -eq $RemoteName}))
     }
 }
 
-Write-Host "git fetch $RemoteName"
-git fetch $RemoteName
+Write-Host "git fetch $RemoteName $PRBranchName"
+git fetch $RemoteName $PRBranchName
 if ($LASTEXITCODE -ne 0)
 {
-    Write-Error "Unable to fetch remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
-    exit $LASTEXITCODE
+    Write-Host "Unable to fetch remote $RemoteName $PRBranchName, git fetch $RemoteName"
+    Write-Host "git fetch $RemoteName"
+    git fetch $RemoteName
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "Unable to fetch remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
+        exit $LASTEXITCODE
+    }
 }
 
 # Check if the branch is default branch in remote.
