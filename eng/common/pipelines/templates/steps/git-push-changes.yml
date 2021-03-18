@@ -51,7 +51,7 @@ steps:
     workingDirectory: "$(System.DefaultWorkingDirectory)/repo"
     filePath: eng/common/scripts/git-branch-push.ps1
     arguments: >
-      -PRBranchName "master"
+      -PRBranchName "a-test-branch"
       -CommitMsg "This is only tests"
       -GitUrl "https://$(azuresdk-github-pat)@github.com/Azure/$(RepoNameWithoutOwner).git"
       -PushArgs "-f"
