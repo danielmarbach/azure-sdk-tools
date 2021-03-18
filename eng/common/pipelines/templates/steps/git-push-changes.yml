@@ -1,7 +1,7 @@
 parameters:
-  PRBranchName: master
-  PROwner: Azure
-  CommitMsg: not-specified
+  PRBranchName: 'master'
+  PROwner: 'Azure'
+  CommitMsg: 'This is only tests'
   RepoOwner: 'Azure'
   RepoName: 'azure-docs-sdk-java'
   PushArgs: '-f'
