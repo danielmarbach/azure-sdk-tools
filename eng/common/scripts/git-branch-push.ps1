@@ -104,10 +104,8 @@ $tryNumber = 0
 do
 {
     $needsRetry = $false
-    Write-Host "git remote set-url origin git@github.com:username/repo.git"
-    git remote set-url origin git@github.com:username/repo.git
     Write-Host "git push $RemoteName $PRBranchName $PushArgs"
-    git push $RemoteName $PRBranchName $PushArgs
+    git push $RemoteName a $PushArgs
     $tryNumber++
     if ($LASTEXITCODE -ne 0)
     {
