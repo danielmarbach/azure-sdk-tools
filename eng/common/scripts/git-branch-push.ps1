@@ -105,7 +105,7 @@ do
 {
     $needsRetry = $false
     Write-Host "git push $RemoteName $PRBranchName $PushArgs"
-    git push $RemoteName HEAD $PushArgs
+    git push $RemoteName a-test-branch $PushArgs
     $tryNumber++
     if ($LASTEXITCODE -ne 0)
     {
