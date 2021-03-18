@@ -1,6 +1,6 @@
 steps:
 - pwsh: |
-    git clone https://github.com/Azure/azure-docs-sdk-java $(System.DefaultWorkingDirectory)/repo
+    git clone https://github.com/Azure/azure-docs-sdk-java.git $(System.DefaultWorkingDirectory)/repo
 
     try {
       Push-Location $(System.DefaultWorkingDirectory)/repo
