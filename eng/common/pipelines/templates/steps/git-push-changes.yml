@@ -16,7 +16,7 @@ steps:
       echo "No changes so skipping code push"
     }
   displayName: Check for changes
-  condition: and(succeeded())
+  condition: succeeded()
   workingDirectory: "$(System.DefaultWorkingDirectory)"
   ignoreLASTEXITCODE: true
 
