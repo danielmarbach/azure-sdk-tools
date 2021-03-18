@@ -31,7 +31,7 @@ steps:
     }
   displayName: Check for changes
   condition: succeeded()
-  workingDirectory: "$(System.DefaultWorkingDirectory)"
+  workingDirectory: "$(System.DefaultWorkingDirectory)/repo"
   ignoreLASTEXITCODE: true
 
 - pwsh: |
@@ -48,7 +48,7 @@ steps:
   condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
   inputs:
     pwsh: true
-    workingDirectory: "$(System.DefaultWorkingDirectory)"
+    workingDirectory: "$(System.DefaultWorkingDirectory)/repo"
     filePath: eng/common/scripts/git-branch-push.ps1
     arguments: >
       -PRBranchName "master"
