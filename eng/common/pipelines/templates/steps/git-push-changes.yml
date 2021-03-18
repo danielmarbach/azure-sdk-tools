@@ -1,17 +1,12 @@
 parameters:
-  PRBranchName: 'master'
-  PROwner: 'Azure'
-  CommitMsg: 'This is only tests'
-  RepoOwner: 'Azure'
-  RepoName: 'azure-docs-sdk-java'
-  PushArgs: '-f'
-  WorkingDirectory: $(System.DefaultWorkingDirectory)'
+  WorkingDirectory: '$(System.DefaultWorkingDirectory)'
   ScriptDirectory: eng/common/scripts
   SkipCheckingForChanges: false
   RemoteName: 'origin'
 
 steps:
 - pwsh: |
+    
     echo "git add -A"
     git add -A
 
@@ -33,7 +28,7 @@ steps:
 
 - pwsh: |
     # Remove the repo owner from the front of the repo name if it exists there
-    $repoName = "${{ parameters.RepoName }}" -replace "^${{ parameters.RepoOwner }}/", ""
+    $repoName = "azure-docs-sdk-java" -replace "^$Azure/", ""
     echo "##vso[task.setvariable variable=RepoNameWithoutOwner]$repoName"
     echo "RepoName = $repoName"
   displayName: Remove Repo Owner from Repo Name
@@ -48,9 +43,9 @@ steps:
     workingDirectory: ${{ parameters.WorkingDirectory }}
     filePath: ${{ parameters.ScriptDirectory }}/git-branch-push.ps1
     arguments: >
-      -PRBranchName "${{ parameters.PRBranchName }}"
-      -CommitMsg "${{ parameters.CommitMsg }}"
-      -GitUrl "https://$(azuresdk-github-pat)@github.com/${{ parameters.PROwner }}/$(RepoNameWithoutOwner).git"
-      -PushArgs "${{ parameters.PushArgs }}"
+      -PRBranchName "master"
+      -CommitMsg "This is only tests"
+      -GitUrl "https://$(azuresdk-github-pat)@github.com/Azure/$(RepoNameWithoutOwner).git"
+      -PushArgs "-f"
       -SkipCommit $${{ parameters.SkipCheckingForChanges }}
       -RemoteName ${{ parameters.RemoteName }}
