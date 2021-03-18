@@ -81,9 +81,9 @@ if (!$SkipCommit) {
     else {
         $amendOption = ""
     }
-    Write-Host "git config --global --add url. "Git@github.com". Instead, 'https://github.com/'
+    Write-Host "git config --global --add url. "Git@github.com". Instead, 'https://github.com/'"
     Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit $amendOption -am `"$($CommitMsg)`""
-    git config --global --add url. "Git@github.com". Instead, "https://github.com/"
+    git config --global --add url."git@github.com:".insteadOf "https://github.com/"
     git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit $amendOption -am "$($CommitMsg)"
     if ($LASTEXITCODE -ne 0)
     {
