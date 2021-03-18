@@ -27,14 +27,14 @@ steps:
     echo "RepoName = $repoName"
   displayName: Remove Repo Owner from Repo Name
   condition: succeeded()
-  workingDirectory: ${{ parameters.WorkingDirectory }}
+  workingDirectory: "$(System.DefaultWorkingDirectory)"
 
 - task: PowerShell@2
   displayName: Push changes
   condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
   inputs:
     pwsh: true
-    workingDirectory: ${{ parameters.WorkingDirectory }}
+    workingDirectory: "$(System.DefaultWorkingDirectory)"
     filePath: eng/common/scripts/git-branch-push.ps1
     arguments: >
       -PRBranchName "master"
